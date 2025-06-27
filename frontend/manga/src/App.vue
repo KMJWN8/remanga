@@ -1,43 +1,59 @@
 <script setup>
+import { onMounted } from 'vue'
 import { RouterLink, RouterView } from 'vue-router'
+import { useTitleStore } from '@/stores/useTitleStore'
+
+const titleStore = useTitleStore()
+
+onMounted(() => {
+  titleStore.loadTitles()
+})
 
 </script>
 
 <template>
   <main>
     <header>
-      <div class="container">
+      <div class="header-container">
 
         <div class="logo">
           <RouterLink to="/">Home</RouterLink>
         </div>
 
-        <nav class="main-nav">
+        <nav class="header-nav">
           <span><RouterLink to="/catalog">Каталог</RouterLink></span>
           <span><a href="#">Топы</a></span>
         </nav>
           
-        <a href="/login" class="btn btn-login">Войти/Зарегистрироваться</a>
+        <a href="#" class="btn btn-login">Войти/Зарегистрироваться</a>
       </div>
     </header>
 
     <div>
-      
+         <RouterView />
     </div>
-  
-  <RouterView />
+
   </main>
 </template>
 
-<style scoped>
+<style>
+* {
+  margin: 0;
+  padding: 0;
+}
+
+main {
+    font-family: 'Newsreader', sans-serif;
+}
+
 header {
   background-color: black;
   padding:15px;
   width: 100%;
 }
 
-.container {
-  max-width: auto;
+.header-container {
+  max-width: 100%;
   margin: 0 auto;
   display: flex;
   flex-direction: row;
@@ -46,12 +62,12 @@ header {
   padding: 0 20px;
 }
 
-.main-nav {
+.header-nav {
   display: flex;
   flex-direction: row;
 }
 
-.main-nav span {
+.header-nav span {
   margin-right: 10px;
   padding: 5px;
   border-radius: 5px;

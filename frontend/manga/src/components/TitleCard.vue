@@ -1,16 +1,25 @@
 <script setup>
 
+defineProps({
+    manga: {
+        type: Object,
+        required: true
+    }
+})
+
 </script>
 
 <template>
+    <router-link :to="{name: 'titleDetail', params: {id: manga.id}}">
     <div class="card">
         <img 
           src="@/assets/tmp_pics/m_dom.jpg" 
           alt="Милый дом"
         >
-        <span>Type, year of release</span>
-        <p>Name</p>
+        <span>{{ manga.type.name }} {{ manga.year_released }}</span>
+        <p>{{ manga.name }}</p>
     </div>
+    </router-link>
 </template>
 
 <style scoped>
@@ -19,7 +28,7 @@
     flex-direction: column;
     border-radius: 12px;
     max-width: 200px;
-    margin: 16px auto;
+    margin: 10px auto;
 }
 
 .card img {

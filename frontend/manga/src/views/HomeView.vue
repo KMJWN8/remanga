@@ -1,13 +1,9 @@
-<script setup>
-
-import TitleCard from "@/components/TitleCard.vue"
-
-</script>
-
 <template>
   <div>
-    This is a home page
-
-    <TitleCard></TitleCard>
+    <h1>This is a Home page</h1>
   </div>
 </template>
+
+<style>
+
+</style>
