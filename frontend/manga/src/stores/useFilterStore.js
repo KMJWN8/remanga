@@ -1,9 +1,17 @@
 import { defineStore } from 'pinia'
-
 import { useFilterLogic } from '@/composables/useFilterLogic'
 
-export const useTitleStore = defineStore('filter', () => {
-  const { titleSelectors, selector, loading, error, loadAllFilter, loadFilterById } = useFilterLogic()
+export const useFilterStore = (filterApi, filterType) => {
+  return defineStore(`filter-${filterType}`, () => {
+
+  const { 
+    titleSelectors, 
+    selector, 
+    loading, 
+    error, 
+    loadAllFilter, 
+    loadFilterById 
+  } = useFilterLogic(filterApi)
 
   return {
     titleSelectors,
@@ -13,4 +21,5 @@ export const useTitleStore = defineStore('filter', () => {
     loadAllFilter,
     loadFilterById,
   }
-})
+ })()
+}

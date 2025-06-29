@@ -10,7 +10,7 @@ const { loading, error, titles } = storeToRefs(titleStore)
 </script>
 
 <template>
-  <div class="container">
+  <div>
     <div v-if="loading">Загрузка...</div>
     <div v-else-if="error">{{ error }}</div>
     <div v-else class="title-list">
@@ -23,10 +23,8 @@ const { loading, error, titles } = storeToRefs(titleStore)
 </template>
 
 <style scoped>
-
 .title-list {
     display: grid;
     grid-template-columns: repeat(5, 20%);
 }
-
 </style>

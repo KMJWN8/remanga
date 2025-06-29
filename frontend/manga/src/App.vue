@@ -1,6 +1,6 @@
 <script setup>
 import { onMounted } from 'vue'
-import { RouterLink, RouterView } from 'vue-router'
+
 import { useTitleStore } from '@/stores/useTitleStore'
 
 const titleStore = useTitleStore()
@@ -14,63 +14,54 @@ onMounted(() => {
 <template>
   <main>
     <header>
-      <div class="header-container">
-
         <div class="logo">
-          <RouterLink to="/">Home</RouterLink>
+          <router-link to="/">
+            <img src="@/assets/logo.svg" alt="logo" class="logo">
+          </router-link>
         </div>
 
-        <nav class="header-nav">
-          <span><RouterLink to="/catalog">Каталог</RouterLink></span>
-          <span><a href="#">Топы</a></span>
-        </nav>
+        <div class="header-nav">
+          <router-link :to="{name: 'catalog'}">Каталог</router-link>
+          <router-link :to="{name: 'filters'}">Фильтры</router-link> 
+          <a href="#">Топы</a>   
+        </div>
           
         <a href="#" class="btn btn-login">Войти/Зарегистрироваться</a>
-      </div>
     </header>
 
-    <div>
-         <RouterView />
+    <div class="container">
+      <router-view/>
     </div>
 
   </main>
 </template>
 
 <style>
-* {
-  margin: 0;
-  padding: 0;
-}
-
-main {
-    font-family: 'Newsreader', sans-serif;
-}
-
 header {
-  background-color: black;
+  background-color: #212121;
   padding:15px;
   width: 100%;
-}
-
-.header-container {
   max-width: 100%;
-  margin: 0 auto;
+  margin-bottom: 20px;
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
-  padding: 0 20px;
 }
 
-.header-nav {
-  display: flex;
-  flex-direction: row;
-}
-
-.header-nav span {
+.header-nav a{
   margin-right: 10px;
-  padding: 5px;
-  border-radius: 5px;
+  padding: 7px;
+  border-radius: 35px;
   background-color: dimgrey;
+}
+
+.container {
+  margin: 0px 20px 20px 20px;
+}
+
+.logo {
+  width: 30px;
+  height: 30px;
 }
 </style>
