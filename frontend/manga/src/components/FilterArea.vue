@@ -21,7 +21,6 @@ const stores = {
 
 onMounted(() => {
   Object.values(stores).forEach(store => store.loadAllFilter())
-  console.log('Фильтры загружены')
 })
 
 const filterOptions = computed(() => ({
@@ -46,6 +45,8 @@ const selectedFilters = ref({
   statuses: [],
   types: []
 })
+
+console.log(selectedFilters.value.genres.length)
 </script>
 
 <template>
