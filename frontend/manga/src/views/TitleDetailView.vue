@@ -17,7 +17,6 @@ onMounted(() => {
 
 const { title } = storeToRefs(titleStore)
 
-console.log(title)
 </script>
 
 <template>

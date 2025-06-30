@@ -1,5 +1,6 @@
 <script setup>
 import { useFilterStore } from '@/stores/useFilterStore'
+import { useTitleStore } from '@/stores/useTitleStore'
 import { ref, onMounted, computed } from 'vue'
 import MultiSelect from 'primevue/multiselect'
 
@@ -10,6 +11,8 @@ import {
   statusApi, 
   typeApi 
   } from '@/api/generalApi'
+
+const titleStore = useTitleStore()
 
 const stores = {
   genres: useFilterStore(genreApi, 'genres'),
@@ -46,61 +49,104 @@ const selectedFilters = ref({
   types: []
 })
 
-console.log(selectedFilters.value.genres.length)
+const handleFilters = () => {
+  const filters = {}
+
+  if (selectedFilters.value.genres.length) {
+    filters.genres = selectedFilters.value.genres
+  }
+  if (selectedFilters.value.categories.length) {
+    filters.categories = selectedFilters.value.categories
+  }
+  if (selectedFilters.value.ageRatings.length) {
+  filters.age_ratings = selectedFilters.value.ageRatings
+  }
+  if (selectedFilters.value.statuses.length) {
+    filters.statuses = selectedFilters.value.statuses
+  }
+  if (selectedFilters.value.types.length) {
+    filters.types = selectedFilters.value.types
+  }
+
+  titleStore.loadTitles(filters)
+}
+
+const resetFilters = () => {
+  selectedFilters.value.genres = []
+  selectedFilters.value.categories = []
+  selectedFilters.value.ageRatings = []
+  selectedFilters.value.statuses = []
+  selectedFilters.value.types = []
+
+  titleStore.loadTitles()
+}
+
+const hasActiveFilters = computed(() => {
+  return (  
+    selectedFilters.value.genres.length ||
+    selectedFilters.value.categories.length ||
+    selectedFilters.value.ageRatings.length ||
+    selectedFilters.value.statuses.length ||
+    selectedFilters.value.types.length
+  )
+})
 </script>
 
 <template>
- <div class="filter-container">
-      <strong>Жанры</strong>
-      <MultiSelect 
-      v-model="selectedFilters.genres" 
-      showClear 
-      :options="filterOptions.genres" 
-      optionLabel="name" 
-      filter 
-      placeholder="Выберите" 
-      class="multiselect" />
+  <div class="filter-container">
+    <strong>Жанры</strong>
+    <MultiSelect 
+    v-model="selectedFilters.genres" 
+    showClear 
+    :options="filterOptions.genres" 
+    optionLabel="name" 
+    filter 
+    placeholder="Выберите" 
+    class="multiselect" />
 
-      <strong>Категории</strong>
-      <MultiSelect 
-      v-model="selectedFilters.categories" 
-      showClear 
-      :options="filterOptions.categories" 
-      optionLabel="name" 
-      filter 
-      placeholder="Выберите" 
-      class="multiselect" />
+    <strong>Категории</strong>
+    <MultiSelect 
+    v-model="selectedFilters.categories" 
+    showClear 
+    :options="filterOptions.categories" 
+    optionLabel="name" 
+    filter 
+    placeholder="Выберите" 
+    class="multiselect" />
 
-      <strong>Типы</strong>
-      <MultiSelect 
-      v-model="selectedFilters.types" 
-      showClear 
-      :options="filterOptions.types" 
-      optionLabel="name" 
-      filter 
-      placeholder="Выберите" 
-      class="multiselect" /> 
+    <strong>Типы</strong>
+    <MultiSelect 
+    v-model="selectedFilters.types" 
+    showClear 
+    :options="filterOptions.types" 
+    optionLabel="name" 
+    filter 
+    placeholder="Выберите" 
+    class="multiselect" /> 
 
-      <strong>Статус</strong>
-      <MultiSelect 
-      v-model="selectedFilters.statuses" 
-      showClear 
-      :options="filterOptions.statuses" 
-      optionLabel="name" 
-      filter 
-      placeholder="Выберите" 
-      class="multiselect" /> 
+    <strong>Статус</strong>
+    <MultiSelect 
+    v-model="selectedFilters.statuses" 
+    showClear 
+    :options="filterOptions.statuses" 
+    optionLabel="name" 
+    filter 
+    placeholder="Выберите" 
+    class="multiselect" /> 
 
-      <strong>Возрастное ограничение</strong>
-      <MultiSelect 
-      v-model="selectedFilters.ageRatings" 
-      showClear 
-      :options="filterOptions.ageRatings" 
-      optionLabel="name" 
-      filter 
-      placeholder="Выберите" 
-      class="multiselect" /> 
- </div>
+    <strong>Возрастное ограничение</strong>
+    <MultiSelect 
+    v-model="selectedFilters.ageRatings" 
+    showClear 
+    :options="filterOptions.ageRatings" 
+    optionLabel="name" 
+    filter 
+    placeholder="Выберите" 
+    class="multiselect" />
+
+    <button @click="handleFilters" class="btn-handle">Применить</button>
+    <button v-if="hasActiveFilters" @click="resetFilters" class="btn-reset">Сбросить</button>
+  </div>
 </template>
 
 <style>

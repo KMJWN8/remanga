@@ -1,6 +1,29 @@
 <script setup>
 import FilterArea from '@/components/FilterArea.vue'
 import TitleCardsList from '@/components/TitleCardsList.vue'
+import { useTitleStore } from '@/stores/useTitleStore'
+import { ref, watch } from 'vue'
+
+const titleStore = useTitleStore()
+
+const searchQuery = ref('')
+
+const searchTitles = async () => {
+  const filters = {}
+
+  if (searchQuery.value) {
+    filters.search = searchQuery.value
+  }
+
+  await titleStore.loadTitles(filters)
+
+}
+
+watch(searchQuery, async (newVal) => {
+  if(!newVal.trim()) {
+    titleStore.loadTitles()
+  }
+})
 
 </script>
 
@@ -9,7 +32,13 @@ import TitleCardsList from '@/components/TitleCardsList.vue'
   <div class="top-wrapper">
     <h1>Каталог тайтлов</h1>
     <div class="search-box">
-      <input type="search" class="search-input" placeholder="Поиск по названию">
+      <input 
+        type="search" 
+        class="search-input" 
+        placeholder="Поиск по названию"
+        v-model="searchQuery"
+        @input="searchTitles"
+        >
       <i class="pi pi-search"></i>
     </div>
   </div>
