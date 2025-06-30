@@ -22,7 +22,6 @@ onMounted(() => {
 
         <div class="header-nav">
           <router-link :to="{name: 'catalog'}">Каталог</router-link>
-          <router-link :to="{name: 'filters'}">Фильтры</router-link> 
           <a href="#">Топы</a>   
         </div>
           

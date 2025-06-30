@@ -15,11 +15,6 @@ const router = createRouter({
       component: () => import('@/views/CatalogView.vue'),
     },
     {
-      path: '/filters',
-      name: 'filters',
-      component: () => import('@/views/FiltersView.vue'),
-    },
-    {
       path: '/title/:id',
       name: 'titleDetail',
       props: true,
