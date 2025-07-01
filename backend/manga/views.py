@@ -1,9 +1,21 @@
 from django_filters.rest_framework import DjangoFilterBackend
-from rest_framework.permissions import IsAuthenticatedOrReadOnly
+
+from rest_framework.permissions import IsAuthenticatedOrReadOnly, IsAuthenticated
 from rest_framework.viewsets import ModelViewSet, ReadOnlyModelViewSet
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from rest_framework import status
 
 from .filters import TitleFilter
-from .models import AgeRating, Category, Genre, MangaType, Status, Title
+from .models import (
+    AgeRating,
+    Category,
+    Genre,
+    MangaType,
+    Status,
+    Title,
+    CustomUser,
+)
 from .serializers import (
     AgeRatingSerializer,
     CategorySerializer,
@@ -11,7 +23,31 @@ from .serializers import (
     MangaTypeSerializer,
     StatusSerializer,
     TitleSerializer,
+    UserSerializer,
 )
+
+
+class UserProfileView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request):
+        serializer = UserSerializer(request.user)
+        return Response(serializer.data)
+
+    def patch(self, request):
+        serializer = UserSerializer(request.user, data=request.data, partial=True)
+
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+class UserViewSet(ModelViewSet):
+    queryset = CustomUser.objects.all()
+    serializer_class = UserSerializer
+    permission_classes = [IsAuthenticated]
 
 
 class AgeRatingViewSet(ReadOnlyModelViewSet):

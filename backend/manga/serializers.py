@@ -1,6 +1,27 @@
 from rest_framework import serializers
+from djoser.serializers import UserCreateSerializer as BaseUserCreateSerializer
 
-from .models import AgeRating, Category, Genre, MangaType, Status, Title
+from .models import (
+    AgeRating,
+    Category,
+    Genre,
+    MangaType,
+    Status,
+    Title,
+    CustomUser,
+)
+
+
+class UserCreateSerializer(BaseUserCreateSerializer):
+    class Meta(BaseUserCreateSerializer.Meta):
+        model = CustomUser
+        fields = ["id", "email", "username", "password"]
+
+
+class UserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = CustomUser
+        fields = ["id", "email", "username", "first_name", "last_name"]
 
 
 class AgeRatingSerializer(serializers.ModelSerializer):

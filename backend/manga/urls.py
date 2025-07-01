@@ -8,6 +8,8 @@ from .views import (
     MangaTypeViewSet,
     StatusViewSet,
     TitleViewSet,
+    UserViewSet,
+    UserProfileView,
 )
 
 router = DefaultRouter()
@@ -18,7 +20,9 @@ router.register(r"genres", GenreViewSet)
 router.register(r"types", MangaTypeViewSet)
 router.register(r"statuses", StatusViewSet)
 
+router.register("users", UserViewSet, basename="users")
 
 urlpatterns = [
     path("", include(router.urls)),
+    path("profile/", UserProfileView.as_view(), name="user-profile"),
 ]
