@@ -1,7 +1,8 @@
 <script setup>
-import { onMounted } from 'vue'
+import { onMounted, ref } from 'vue'
 
 import { useTitleStore } from '@/stores/useTitleStore'
+import LoginForm from '@/components/ LoginForm.vue'
 
 const titleStore = useTitleStore()
 
@@ -9,11 +10,17 @@ onMounted(() => {
   titleStore.loadTitles()
 })
 
+const showModal = ref(false)
+
+const openLoginModal = () => {
+  showModal.value = true
+}
 </script>
 
 <template>
   <main>
     <header>
+      <div class="main-header-container">
         <div class="logo">
           <router-link to="/">
             <img src="@/assets/logo.svg" alt="logo" class="logo">
@@ -25,11 +32,13 @@ onMounted(() => {
           <a href="#">Топы</a>   
         </div>
           
-        <a href="#" class="btn btn-login">Войти/Зарегистрироваться</a>
+        <button @click="openLoginModal" class="btn btn-login">Войти</button>
+      </div>
     </header>
 
     <div class="container">
       <router-view/>
+      <LoginForm v-model="showModal"></LoginForm>
     </div>
 
   </main>
@@ -38,29 +47,45 @@ onMounted(() => {
 <style>
 header {
   background-color: #212121;
-  padding:15px;
   width: 100%;
   max-width: 100%;
   margin-bottom: 20px;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-between;
+  position: sticky;
+  top: 0;
 }
 
-.header-nav a{
-  margin-right: 10px;
+.main-header-container {
+  display: grid;
+  grid-template-columns: 0.25fr 1fr 1fr;
+  align-items: center;
+  padding:15px;
+  width: 80%;
+  margin: 0 auto;
+}
+
+.header-nav {
+  display: flex;
+  gap: 20px;
+}
+
+.header-nav a{ 
   padding: 7px;
   border-radius: 35px;
   background-color: dimgrey;
 }
 
 .container {
-  margin: 0px 20px 20px 20px;
+  margin: 0 auto;
+  width: 80%;
+  overflow: visible;
 }
 
 .logo {
   width: 30px;
   height: 30px;
+}
+
+.btn-login {
+  justify-self: end;
 }
 </style>

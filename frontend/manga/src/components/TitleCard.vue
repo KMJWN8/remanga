@@ -10,13 +10,13 @@ defineProps({
 </script>
 
 <template>
-  <router-link :to="{name: 'titleDetail', params: {id: manga.id}}">
-    <div class="card">
+  <div class="card">
+    <router-link :to="{name: 'titleDetail', params: {id: manga.id}}">
       <img src="@/assets/tmp_pics/2.webp" alt="Милый дом">
       <span>{{ manga.type.name }} {{ manga.year_released }}</span>
       <p>{{ manga.name }}</p>
-    </div>
-  </router-link>
+    </router-link>
+</div>
 </template>
 
 <style scoped>

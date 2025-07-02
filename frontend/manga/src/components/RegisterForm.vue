@@ -18,11 +18,13 @@ function closeModal() {
 const authStore = useAuthStore()
 
 const email = ref('')
+const username = ref('')
 const password = ref('')
+const re_password = ref('')
 
 const onSubmit = async () => {
   try {
-    await authStore.login(email.value, password.value)
+    await authStore.login(email.value, username.value, password.value, re_password.value)
   } catch {
     alert(authStore.error)
   }
@@ -32,10 +34,11 @@ const onSubmit = async () => {
 
 <template>
   <div>
+      <!-- Модальное окно -->
     <div v-if="modelValue" class="modal-overlay" @click.self="closeModal">
       <div class="modal">
         <button class="btn-close" @click="closeModal">&times;</button>
-        <h2>Вход</h2>
+        <h2>Вход в аккаунт</h2>
   
         <form @submit.prevent="onSubmit" class="login-form">
           <label for="email">Email</label>
@@ -44,6 +47,15 @@ const onSubmit = async () => {
             v-model="email" 
             type="email"
             placeholder="Введите email"
+            required
+          />
+
+          <label for="username">Логин</label>
+          <input
+            id="username"
+            v-model="username"
+            type="text"
+            placeholder="Введите логин"
             required
           />
 
@@ -56,11 +68,19 @@ const onSubmit = async () => {
             required
           />
 
+          <label for="re_password">Подтверждение пароля</label>
+          <input
+            id="re_password"
+            v-model="re_password"
+            type="password"
+            placeholder="Введите пароль"
+            required
+          />
           <button type="submit" class="btn-submit">Войти</button>
         </form>
         <div class="bottom-text">
-          <p>Нет учетной записи?</p>
-          <a href="#">Зарегистрироваться</a>
+          <p>Уже есть аккаунт?</p>
+          <a href="#">Войти</a>
         </div>
       </div>
     </div>
@@ -82,7 +102,7 @@ const onSubmit = async () => {
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.7);
+  background-color: rgba(0, 0, 0, 0.5);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -163,7 +183,6 @@ const onSubmit = async () => {
   display: grid;
   grid-template-columns: 3fr 1fr;
   margin-top: 10px;
-  font-size: small;
 }
 
 a {

@@ -157,6 +157,8 @@ const hasActiveFilters = computed(() => {
   border-radius: 15px;
   height: max-content;
   padding: 15px;
+  position: sticky;
+  top: 100px;
 }
 
 .multiselect {
