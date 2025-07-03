@@ -3,9 +3,10 @@ import { onMounted, ref } from 'vue'
 
 import { useTitleStore } from '@/stores/useTitleStore'
 import { useAuthStore } from './stores/useAuthStore'
+import { storeToRefs } from 'pinia'
+
 import LoginForm from '@/components/ LoginForm.vue'
 import RegisterForm from './components/RegisterForm.vue'
-import { storeToRefs } from 'pinia'
 
 
 const titleStore = useTitleStore()

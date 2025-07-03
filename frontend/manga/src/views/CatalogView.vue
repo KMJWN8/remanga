@@ -1,8 +1,11 @@
 <script setup>
+import { ref, watch } from 'vue'
+
+import { useTitleStore } from '@/stores/useTitleStore'
+
 import FilterArea from '@/components/FilterArea.vue'
 import TitleCardsList from '@/components/TitleCardsList.vue'
-import { useTitleStore } from '@/stores/useTitleStore'
-import { ref, watch } from 'vue'
+
 
 const titleStore = useTitleStore()
 

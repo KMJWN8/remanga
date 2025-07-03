@@ -1,5 +1,7 @@
 <script setup>
 import TitleCard from './TitleCard.vue'
+import LoaderIcon from '@/components/LoaderIcon.vue'
+
 import { useTitleStore } from '@/stores/useTitleStore'
 import { storeToRefs } from 'pinia'
 
@@ -11,7 +13,9 @@ const { loading, error, titles } = storeToRefs(titleStore)
 
 <template>
   <div>
-    <div v-if="loading">Загрузка...</div>
+    <div v-if="loading">
+      <LoaderIcon />
+    </div>
     <div v-else-if="error">{{ error }}</div>
     <div v-else class="title-list">
       <TitleCard
