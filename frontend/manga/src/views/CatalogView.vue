@@ -8,20 +8,23 @@ const titleStore = useTitleStore()
 
 const searchQuery = ref('')
 
+const hasSearched = ref(false)
+
 const searchTitles = async () => {
   const filters = {}
 
-  if (searchQuery.value) {
-    filters.search = searchQuery.value
+  if (searchQuery.value.trim()) {
+    filters.search = searchQuery.value.trim()
   }
 
   await titleStore.loadTitles(filters)
-
+  hasSearched.value = true
 }
 
-watch(searchQuery, async (newVal) => {
-  if(!newVal.trim()) {
+watch(searchQuery, (newVal) => {
+  if (!newVal.trim() && hasSearched.value) {
     titleStore.loadTitles()
+    hasSearched.value = false
   }
 })
 
@@ -37,7 +40,7 @@ watch(searchQuery, async (newVal) => {
         class="search-input" 
         placeholder="Поиск по названию"
         v-model="searchQuery"
-        @input="searchTitles"
+        @keyup.enter="searchTitles"
         >
       <i class="pi pi-search"></i>
     </div>

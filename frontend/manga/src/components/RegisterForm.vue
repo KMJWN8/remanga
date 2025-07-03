@@ -9,9 +9,14 @@ defineProps({
   }
 })
 
-const emit = defineEmits(['update:modelValue'])
-  
-function closeModal() {
+const emit = defineEmits(['update:modelValue', 'open-login'])
+
+const openLogin = () => {
+  closeModal()
+  emit('open-login')
+}
+
+const closeModal = () => {
   emit('update:modelValue', false)
 }
 
@@ -24,21 +29,20 @@ const re_password = ref('')
 
 const onSubmit = async () => {
   try {
-    await authStore.login(email.value, username.value, password.value, re_password.value)
+    await authStore.register(email.value, username.value, password.value, re_password.value)
   } catch {
     alert(authStore.error)
   }
-  closeModal()
+  openLogin()
 }
 </script>
 
 <template>
   <div>
-      <!-- Модальное окно -->
     <div v-if="modelValue" class="modal-overlay" @click.self="closeModal">
       <div class="modal">
         <button class="btn-close" @click="closeModal">&times;</button>
-        <h2>Вход в аккаунт</h2>
+        <h2>Регистрация</h2>
   
         <form @submit.prevent="onSubmit" class="login-form">
           <label for="email">Email</label>
@@ -80,7 +84,7 @@ const onSubmit = async () => {
         </form>
         <div class="bottom-text">
           <p>Уже есть аккаунт?</p>
-          <a href="#">Войти</a>
+          <a href="#" @click.prevent="openLogin">Войти</a>
         </div>
       </div>
     </div>
@@ -176,7 +180,7 @@ const onSubmit = async () => {
   }
   
 .btn-submit:hover {
-  background-color: #0056b3;
+  background-color: #fa030b;
 }
 
 .bottom-text {

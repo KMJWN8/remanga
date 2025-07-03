@@ -122,8 +122,6 @@ export const useAuthStore = defineStore('auth', () => {
                 password,
                 re_password
             })
-
-            router.push('/')
         } catch (e) {
             if (e.response && e.response.data) {
                 error.value = e.response.data.detail || JSON.stringify(e.response.data)

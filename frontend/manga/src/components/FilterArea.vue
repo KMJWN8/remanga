@@ -53,19 +53,19 @@ const handleFilters = () => {
   const filters = {}
 
   if (selectedFilters.value.genres.length) {
-    filters.genres = selectedFilters.value.genres
+    filters.genres = selectedFilters.value.genres.map(item => item.code)
   }
   if (selectedFilters.value.categories.length) {
-    filters.categories = selectedFilters.value.categories
+    filters.categories = selectedFilters.value.categories.map(item => item.code)
   }
   if (selectedFilters.value.ageRatings.length) {
-  filters.age_ratings = selectedFilters.value.ageRatings
+  filters.age_ratings = selectedFilters.value.ageRatings.map(item => item.code)
   }
   if (selectedFilters.value.statuses.length) {
-    filters.statuses = selectedFilters.value.statuses
+    filters.statuses = selectedFilters.value.statuses.map(item => item.code)
   }
   if (selectedFilters.value.types.length) {
-    filters.types = selectedFilters.value.types
+    filters.types = selectedFilters.value.types.map(item => item.code)
   }
 
   titleStore.loadTitles(filters)

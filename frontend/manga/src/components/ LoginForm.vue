@@ -9,16 +9,21 @@ defineProps({
   }
 })
 
-const emit = defineEmits(['update:modelValue'])
+const emit = defineEmits(['update:modelValue', 'open-register'])
   
-function closeModal() {
-  emit('update:modelValue', false)
+const openRegister = () => {
+  closeModal()
+  emit('open-register') 
 }
 
 const authStore = useAuthStore()
 
 const email = ref('')
 const password = ref('')
+
+const closeModal = () => {
+  emit('update:modelValue', false)
+}
 
 const onSubmit = async () => {
   try {
@@ -60,7 +65,7 @@ const onSubmit = async () => {
         </form>
         <div class="bottom-text">
           <p>Нет учетной записи?</p>
-          <a href="#">Зарегистрироваться</a>
+          <a href="#" @click.prevent="openRegister">Зарегистрироваться</a>
         </div>
       </div>
     </div>
@@ -156,7 +161,7 @@ const onSubmit = async () => {
   }
   
 .btn-submit:hover {
-  background-color: #0056b3;
+  background-color: #fa030b;
 }
 
 .bottom-text {
