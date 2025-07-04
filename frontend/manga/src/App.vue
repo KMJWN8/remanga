@@ -102,8 +102,8 @@ header {
 
 .header-nav a{ 
   padding: 7px;
-  border-radius: 35px;
-  background-color: dimgrey;
+  border-radius: 5px;
+  background-color: rgba(175, 172, 172, 0.3);
 }
 
 .container {

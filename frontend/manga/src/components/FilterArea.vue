@@ -144,8 +144,8 @@ const hasActiveFilters = computed(() => {
     placeholder="Выберите" 
     class="multiselect" />
 
-    <button @click="handleFilters" class="btn-handle">Применить</button>
-    <button v-if="hasActiveFilters" @click="resetFilters" class="btn-reset">Сбросить</button>
+    <button @click="handleFilters" class="btn">Применить</button>
+    <button v-if="hasActiveFilters" @click="resetFilters" class="btn">Сбросить</button>
   </div>
 </template>
 
